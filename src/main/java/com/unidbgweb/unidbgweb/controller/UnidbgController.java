@@ -44,11 +44,11 @@ public class UnidbgController {
     }
 
     @GetMapping("/xhs")
-    public String xhsShield(String params, String sessionId, String deviceId) {
-        if (null == deviceId || null == params || null == sessionId) {
-            return "params、deviceId、sessionId参数不为空";
+    public String xhsShield(String params, String sessionId, String deviceId, String userAgent) {
+        if (null == deviceId || null == params || null == sessionId || null == userAgent) {
+            return "params、deviceId、sessionId、userAgent参数不为空";
         }
-        return unidbgService.xhsShield(params, sessionId, deviceId);
+        return unidbgService.xhsShield(params, sessionId, deviceId, userAgent);
     }
 
 }
