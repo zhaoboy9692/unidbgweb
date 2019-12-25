@@ -33,9 +33,9 @@ public class KuAnAS extends AbstractJni {
         TinyEncode = vm.resolveClass("com/coolapk/market/util/AuthUtils");
     }
 
-    public String getAS() {
+    public String getAS(String deviceId) {
         DvmObject context = vm.resolveClass("android/content/ContextWrapper").newObject(null);
-        Number ret = TinyEncode.callStaticJniMethod(emulator, "getAS(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;", context, vm.addLocalObject(new StringObject(vm, "634e92b2-83ca-3404-99a4-53d54c2ca3ad")));
+        Number ret = TinyEncode.callStaticJniMethod(emulator, "getAS(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;", context, vm.addLocalObject(new StringObject(vm, deviceId)));
         long hash = ret.intValue() & 0xffffffffL;
 //        System.out.println("getNativeVersion version=" + hash + ", offset=" + (System.currentTimeMillis() - start) + "ms");
         StringObject version = vm.getObject(hash);
