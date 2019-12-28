@@ -1,7 +1,0 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Tue Dec 24 12:41:51 CST 2019
-http\://scmm.wisers.com/nexus/content/repositories/Wisers-SNAPSHOT/.error=
-http\://p.gzmtx.cn\:8081/nexus/content/groups/public/.lastUpdated=1577162511242
-http\://scmm.wisers.com/nexus/content/groups/public/.lastUpdated=1577162510404
-http\://scmm.wisers.com/nexus/content/repositories/Wisers-SNAPSHOT/.lastUpdated=1577162510489
-http\://scmm.wisers.com/nexus/content/groups/public/.error=

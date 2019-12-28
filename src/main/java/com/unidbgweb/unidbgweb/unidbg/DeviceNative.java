@@ -26,7 +26,7 @@ import java.util.zip.GZIPOutputStream;
 public class DeviceNative extends AbstractJni implements IOResolver {
 
     private static LibraryResolver createLibraryResolver() {
-        return new AndroidResolver(23);
+        return new AndroidResolver(19);
     }
 
     private static ARMEmulator createARMEmulator() {

@@ -6,7 +6,6 @@ import cn.banny.unidbg.linux.android.AndroidARMEmulator;
 import cn.banny.unidbg.linux.android.AndroidResolver;
 import cn.banny.unidbg.linux.android.dvm.DalvikModule;
 import cn.banny.unidbg.linux.android.dvm.DvmClass;
-import cn.banny.unidbg.linux.android.dvm.StringObject;
 import cn.banny.unidbg.linux.android.dvm.VM;
 import cn.banny.unidbg.linux.android.dvm.array.ByteArray;
 import cn.banny.unidbg.memory.Memory;
@@ -28,7 +27,6 @@ public class TianYanCha {
 
     //初始化
     public TianYanCha() throws IOException {
-        //创建毒进程，这里我用了天眼查的也可以，不知道咋回事
         emulator = new AndroidARMEmulator("com.du.du");
         Memory memory = emulator.getMemory();
         //作者支持19和23两个sdk
@@ -36,10 +34,10 @@ public class TianYanCha {
         memory.setCallInitFunction();
         //创建DalvikVM，利用apk本身，可以为null
         //如果用apk文件加载so的话，会自动处理签名方面的jni，具体可看AbstractJni,这就是利用apk加载的好处
-        vm = emulator.createDalvikVM(new File("src/main/resources/app/tianyancha/tianyancha10.8.0.apk"));
-//        vm = emulator.createDalvikVM(null);
+//        vm = emulator.createDalvikVM(new File("src/main/resources/app/tianyancha/tianyancha10.8.0.apk"));
+        vm = emulator.createDalvikVM(null);
         //加载so，使用armv8-64速度会快很多
-        DalvikModule dm = vm.loadLibrary("JMEncryptBox", false);
+        DalvikModule dm = vm.loadLibrary(new File("src/main/resources/app/tianyancha/libJMEncryptBox.so"), false);
         //调用jni
         dm.callJNI_OnLoad(emulator);
         module = dm.getModule();
@@ -53,14 +51,13 @@ public class TianYanCha {
     }
 
     private String encryptToBase64(String str, int i) throws UnsupportedEncodingException {
-        Number ret = null;
+        Number ret;
         if (i == 2) {
             ret = TTEncryptUtils.callStaticJniMethod(emulator, "encryptByRandomType2([B)[B", vm.addLocalObject(new ByteArray(str.getBytes("UTF-8"))));
         } else {
             ret = TTEncryptUtils.callStaticJniMethod(emulator, "encryptByRandomType1([B)[B", vm.addLocalObject(new ByteArray(str.getBytes("UTF-8"))));
         }
         long hash = ret.intValue() & 0xffffffffL;
-        //或得其值
         ByteArray res = vm.getObject(hash);
         System.out.println(res);
         return Base64.getEncoder().encodeToString("".getBytes());
