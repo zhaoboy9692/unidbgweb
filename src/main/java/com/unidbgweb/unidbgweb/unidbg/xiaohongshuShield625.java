@@ -14,6 +14,8 @@ import cn.banny.unidbg.memory.Memory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class xiaohongshuShield625 extends AbstractJni implements IOResolver {
 
@@ -137,20 +139,19 @@ public class xiaohongshuShield625 extends AbstractJni implements IOResolver {
         System.out.println("call: " + signature);
         switch (signature) {
             case "okhttp3/Interceptor$Chain->request()Lokhttp3/Request;":
-                //ok
                 DvmClass clazz = vm.resolveClass("okhttp3/Request");
                 return clazz.newObject(null);
             case "okhttp3/Request->url()Lokhttp3/HttpUrl;":
-                //ok
+                //return https://www.xiaohongshu.com/api/sns/v1/system_service/post_note_remind?platform=android&deviceId=54013cea-7435-3b12-8c79-3a7974e15c82&device_fingerprint=201912142221225d890a79a26980b0844b0321208dafa7011d4169d9cc7b30&device_fingerprint1=201912142221225d890a79a26980b0844b0321208dafa7011d4169d9cc7b30&versionName=6.22.0&channel=YingYongBao&sid=session.1576333283741629843010&lang=zh-Hans&t=1577617524&fid=157753669300b74d5477a32f71ad38ce434911dd9ef7&sign=d48774e80e17ab4c27f6f9826583e4dc
                 clazz = vm.resolveClass("okhttp3/HttpUrl");
                 return clazz.newObject(null);
             case "okhttp3/HttpUrl->encodedPath()Ljava/lang/String;":
-                //ok
-                String url = "https://square.github.io/okhttp/4.x/okhttp/okhttp3/-http-url/";
-                return new StringObject(vm, url);
+                ///return api/sns/v1/system_service/launch
+                String path = "api/sns/v1/system_service/launch";
+                return new StringObject(vm, path);
             case "okhttp3/HttpUrl->encodedQuery()Ljava/lang/String;":
                 //ok**
-                String Query = "channel=YingYongBaodeviceId=ec258cae-33c4-35ca-a909-67bf45c0f73edevice_fingerprint=20191123001415aae06280fc655b5c963e9db249e364ce0160af67ab7f3c61device_fingerprint1=20191123001415aae06280fc655b5c963e9db249e364ce0160af67ab7f3c61filters=[]keyword=做菜1lang=zh-Hanspage=1page_size=20platform=Androidsearch_id=EED2BE2760DAA985FCA3CE9DA636172Asid=session.1569218578701927068721sign=de46015c85b29d8cff44c3fd1535b28asort=source=search_result_notest=1575460839url=/api/sns/v8/search/notesversionName=5.26.0";
+                String Query = "platform=android&deviceId=54013cea-7435-3b12-8c79-3a7974e15c82&device_fingerprint=201912142221225d890a79a26980b0844b0321208dafa7011d4169d9cc7b30&device_fingerprint1=201912142221225d890a79a26980b0844b0321208dafa7011d4169d9cc7b30&versionName=6.22.0&channel=YingYongBao&sid=session.1576333283741629843010&lang=zh-Hans&t=1577617741&fid=157753669300b74d5477a32f71ad38ce434911dd9ef7&sign=ef82ce8e7c4814b618e060d82fddda5b";
                 return new StringObject(vm, Query);
             case "okhttp3/Request->body()Lokhttp3/RequestBody;":
                 //ok**
@@ -158,23 +159,52 @@ public class xiaohongshuShield625 extends AbstractJni implements IOResolver {
                 return clazz.newObject(null);
             case "okhttp3/Request->headers()Lokhttp3/Headers;":
                 //ok**
-                StringObject array = vaList.getObject(0);
-                System.out.println("*-*-"+array);
                 clazz = vm.resolveClass("okhttp3/Headers");
                 return clazz.newObject(null);
-            case "okio/Buffer->writeString(Ljava/lang/String;Ljava/nio/charset/Charset;)Lokio/Buffer;":
-                //ok**
-                clazz = vm.resolveClass("okio/Buffer");
-                return clazz.newObject(null);
+
+            case "okhttp3/Headers->value(I)Ljava/lang/String;":
+                Map<Integer, String> valueMap = new HashMap();
+                valueMap.put(0, "platform=android&deviceId=54013cea-7435-3b12-8c79-3a7974e15c82&device_fingerprint=201912142221225d890a79a26980b0844b0321208dafa7011d4169d9cc7b30&device_fingerprint1=201912142221225d890a79a26980b0844b0321208dafa7011d4169d9cc7b30&versionName=6.22.0&channel=YingYongBao&sid=session.1576333283741629843010&t=1577619920&fid=157753669300b74d5477a32f71ad38ce434911dd9ef7");
+                valueMap.put(1, "Dalvik/2.1.0 (Linux; U; Android 6.0; BLN-AL10 Build/HONORBLN-AL10) Resolution/1080*1920 Version/6.22.0 Build/6220111 Device/(HUAWEI;BLN-AL10) discover/6.22.0");
+                valueMap.put(2, "shield");
+                valueMap.put(3, "platform=android&build=6220111&deviceId=54013cea-7435-3b12-8c79-3a7974e15c82");
+                valueMap.put(4, "gzip");
+                int index = vaList.getInt(0);
+                long hash = index & 0xffffffffL;
+                DvmObject obj = vm.getObject(hash);
+                System.out.println(obj);
+                System.out.println("valueIndex->" + index);
+                if (index > 4) {
+                    return new StringObject(vm, "");
+                }
+
+                return new StringObject(vm, valueMap.get(index));
             case "okhttp3/Headers->name(I)Ljava/lang/String;":
                 //ok**
-                return new StringObject(vm, "shield");
+                //有问题，从0开始获取请求头
+                Map<Integer, String> nameMap = new HashMap();
+                nameMap.put(0, "xy-common-params");
+                nameMap.put(1, "User-Agent");
+                nameMap.put(2, "shield");
+                nameMap.put(3, "xy-platform-info");
+                nameMap.put(4, "accept-encoding");
+                index = vaList.getInt(0);
+                System.out.println("nameIndex->" + index);
+                if (index > 4) {
+                    return new StringObject(vm, "");
+                }
+                return new StringObject(vm, nameMap.get(index));
+            case "okio/Buffer->writeString(Ljava/lang/String;Ljava/nio/charset/Charset;)Lokio/Buffer;":
+                //ok**
+                //res->[size=467 text=/api/sns/v4/search/trendingsource=explore_feed&city=&platform=an…]
+                //a1->source=explore_feed&city=&platform=android&deviceId=54013cea-7435-3b12-8c79-3a7974e15c82&device_fingerprint=201912142221225d890a79a26980b0844b0321208dafa7011d4169d9cc7b30&device_fingerprint1=201912142221225d890a79a26980b0844b0321208dafa7011d4169d9cc7b30&versionName=6.22.0&channel=YingYongBao&sid=session.1576333283741629843010&lang=zh-Hans&t=1577618148&fid=157753669300b74d5477a32f71ad38ce434911dd9ef7&sign=78d699be505a41d50f14b789f8211731
+                //a2->java.nio.charset.CharsetICU[UTF-8]
+                clazz = vm.resolveClass("okio/Buffer");
+                return clazz.newObject(null);
             case "okio/Buffer->readByteArray()[B":
                 //ok**
-                DvmObject string = dvmObject;
-                StringObject encoding = vaList.getObject(0);
-                System.err.println("string=" + string.getValue() + ", encoding=" + encoding.getValue());
-                return new ByteArray((byte[]) string.getValue());
+                clazz = vm.resolveClass("okio/Buffer");
+                return new ByteArray("".getBytes());
 
         }
 
@@ -187,7 +217,7 @@ public class xiaohongshuShield625 extends AbstractJni implements IOResolver {
             case "okhttp3/Response->code()I":
                 return 200;
             case "okhttp3/Headers->size()I":
-                return 1;
+                return 4;
         }
         return super.callIntMethodV(vm, dvmObject, signature, vaList);
     }

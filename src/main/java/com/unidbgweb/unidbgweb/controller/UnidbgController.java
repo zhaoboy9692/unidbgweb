@@ -43,6 +43,14 @@ public class UnidbgController {
         return unidbgService.getInfo2(deviceId);
     }
 
+    @GetMapping("/kuaishou")
+    public String kuaiShouSign(String params) {
+        if (null == params) {
+            return "params参数不为空";
+        }
+        return unidbgService.kuaiShouSign(params);
+    }
+
     @GetMapping("/xhs")
     public String xhsShield(String params, String sessionId, String deviceId, String userAgent) {
         if (null == deviceId || null == params || null == sessionId || null == userAgent) {
