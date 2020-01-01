@@ -177,7 +177,6 @@ public class xiaohongshuShield625 extends AbstractJni implements IOResolver {
                 if (index > 4) {
                     return new StringObject(vm, "");
                 }
-
                 return new StringObject(vm, valueMap.get(index));
             case "okhttp3/Headers->name(I)Ljava/lang/String;":
                 //ok**

@@ -24,12 +24,6 @@
             <artifactId>unidbg</artifactId>
             <version>0.1.2-SNAPSHOT</version>
         </dependency>
-        <!--        0.1.0可以使用快手-->
-        <!--        <dependency>-->
-        <!--            <groupId>cn.banny</groupId>-->
-        <!--            <artifactId>unidbg</artifactId>-->
-        <!--            <version>0.1.0-SNAPSHOT</version>-->
-        <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -38,12 +32,6 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>4.2.2</version>
         </dependency>
 
         <dependency>

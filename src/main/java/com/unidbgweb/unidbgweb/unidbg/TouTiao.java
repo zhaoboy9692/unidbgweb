@@ -56,6 +56,8 @@ public class TouTiao extends AbstractJni implements IOResolver {
 
         vm = emulator.createDalvikVM(new File("src/main/resources/app/toutiao/头条720.apk"));
         vm.setJni(this);
+        vm.setVerbose(true);
+
 //        DalvikModule dm = vm.loadLibrary(new File(soPath + soName), false);
         DalvikModule dm = vm.loadLibrary("cms", false);
         dm.callJNI_OnLoad(emulator);

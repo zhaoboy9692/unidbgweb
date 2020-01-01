@@ -53,8 +53,8 @@ public class KuaiShouSign extends AbstractJni implements IOResolver {
 
     public static void main(String[] args) throws Exception {
         KuaiShouSign test = new KuaiShouSign();
-        String str = "app=0appver=6.2.3.8614c=ALI_CPD,17client_key=3c2cd3f3contactData=7A9IqsDstz815+zxGyC1+XgougsArgtFUPBRYcRwUhcjwTsafJBmYnLZgLc5l4g7sjINLj0nrXFq1CCsFHteQSpac+959kD0yYEJyGzukSqMQGayQCue397jX98gp0NPU26waWGh+JWMaYnZG/F1Sg==country_code=CNdid=ANDROID_9fb7792f6142ea63did_gt=1553767215144ftt=hotfix_ver=isp=iuid=iv=5okP62w8Yl7WHiG6kpf=ANDROID_PHONEkpn=KUAISHOUlanguage=zh-cnlat=40.054041lon=116.298517max_memory=192mod=LGE(Nexus 5)net=WIFIoc=ALI_CPD,17os=androidsys=ANDROID_6.0.1token=f68245ccc1344489894f963248cc3501-1082592150ud=1082592150ver=6.2";
-        test.getSign(str);
+        String str = "app=0appver=6.11.1.11975bodyMd5=4c99047b2088073a03bb5d5cad0e4bbdbrowseType=1c=ALI_CPD,9client_key=3c2cd3f3country_code=cndid=ANDROID_836c8543741262cdegid=DFP65CB21958A7DEFD9D2B15E1EC1FF72263C4D76FDC9D0D61957F584F2453ADencoding=zstdftt=hotfix_ver=isp=CTCCiuid=kpf=ANDROID_PHONEkpn=KUAISHOUlanguage=zh-cnlat=22.67393lon=113.929135max_memory=384mod=HUAWEI(BLN-AL10)net=WIFIoc=UNKNOWNos=androidpriorityType=1sh=1920socName=: HiSilicon Kirin 650sw=1080sys=ANDROID_6.0token=efe1d029308c42da966576739e5b8374-1489600782ud=1489600782ver=6.11";
+        System.out.println(test.getSign(str));
         test.destroy();
     }
 
